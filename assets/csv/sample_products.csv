@@ -1,0 +1,2 @@
+Name,Code,Barcode Symbology,Brand,Category Code,Unit Code,Sale Unit Code, Purchase Unit Code,Cost,Price,Alert Quantity, Tax Rate Name,Tax Method,Image,Subcategory Code,Product Variants Separated by |,Custom Field 1,Custom Field 2,Custom Field 3,Custom Field 4,Custom Field 5,Custom Field 6, HSN Code
+Product 11,PR-11,code128,Guess,C1,pc,pc,dozen,90,100,20,No Tax,exclusive,no_image.png,SC1,Red|Blue|Black|White,CF1,CF2,CF3,CF4,CF5,CF6,HSN

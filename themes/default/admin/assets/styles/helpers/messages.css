@@ -1,0 +1,462 @@
+
+.inbox-body {
+    position: relative;
+}
+.table-wrap {
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding: 10px 14px 7px;
+    position: relative;
+}
+.inbox-body.no-content-padding {
+    background: none repeat scroll 0 0 #FFFFFF;
+    margin-top: 0;
+}
+.inbox-nav-bar {
+    background: none repeat scroll 0 0 #FFFFFF;
+    height: 70px;
+    margin-bottom: 0;
+    padding: 20px 14px;
+}
+.inbox-nav-bar .page-title {
+    display: inline-block;
+    line-height: 33px;
+    margin: 0;
+    vertical-align: middle;
+    width: 196px;
+}
+.inbox-footer {
+    background: none repeat scroll 0 0 #2A2725;
+    border-top: 1px solid #CECECE;
+    bottom: -53px;
+    height: 52px;
+    padding: 15px 14px 0;
+    position: absolute;
+    width: 100%;
+}
+.inbox-footer .btn-group, .inbox-paging {
+    margin-left: 10px;
+    margin-top: 0px;
+}
+#inbox-table {
+    border-left-color: rgba(0, 0, 0, 0) !important;
+    border-right-color: rgba(0, 0, 0, 0) !important;
+    border-top: 0 none;
+    font-size: 13px;
+}
+#inbox-table tbody tr:hover {
+    background: none repeat scroll 0 0 #E4E4E4;
+    cursor: pointer;
+}
+#inbox-table tr td {
+    border-left: 0 none;
+    border-right: 0 none;
+    line-height: 26px;
+    padding: 6px 4px 7px !important;
+}
+#inbox-table .inbox-table-icon {
+    padding-left: 15px !important;
+}
+#inbox-table tbody tr th {
+    overflow: hidden;
+}
+#inbox-table.table tbody > tr > td {
+    border-color: #FFFFFF !important;
+}
+#inbox-table .checkbox, #inbox-table .radio {
+    margin-bottom: 0;
+    margin-top: -1px;
+}
+.inbox-data-attachment, .inbox-table-icon {
+    padding-left: 12px !important;
+    padding-right: 0 !important;
+    text-align: left;
+    width: 28px;
+}
+.inbox-data-status {
+    width: 120px;
+    padding-left: 10px !important;
+}
+.inbox-data-status > *:first-child {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 120px;
+}
+.inbox-data-date {
+    padding-left: 7px !important;
+    padding-right: 0 !important;
+    width: 80px;
+}
+.inbox-data-message > *:first-child {
+    color: #8A8A8A;
+    height: 27px;
+    padding-left: 10px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+.inbox-data-message > *:first-child span {
+    color: #111111;
+}
+.inbox-data-message > *:first-child span.label {
+    color: #FFFFFF;
+}
+.inbox-data-message > *:first-child > *:first-child:after {
+    content: " - ";
+}
+.unread td {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+.unread td {
+    font-weight: bold !important;
+}
+tr.highlight td, tr.unread.highlight td {
+    background: none repeat scroll 0 0 #FFFFCC !important;
+    color: #333333;
+}
+.inbox-checkbox-triggered {
+    display: inline-block;
+}
+.inbox-checkbox-triggered > .btn-group {
+    margin-right: 10px;
+}
+.inbox-checkbox-triggered > .btn-group .btn {
+    padding-left: 14px;
+    padding-right: 14px;
+}
+.inbox-side-bar {
+    background: none repeat scroll 0 0 #FFFFFF;
+    display: block;
+    height: 100%;
+    padding: 10px 0 10px 14px;
+    position: absolute;
+    width: 200px;
+}
+.inbox-side-bar h6 {
+    color: #838383;
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    padding: 0 15px;
+    text-transform: uppercase;
+}
+.inbox-side-bar h6 a {
+    font-size: 14px;
+    margin-top: -2px;
+}
+.inbox-side-bar h6 .tooltip {
+    text-transform: none !important;
+}
+.inbox-side-bar > .btn {
+    margin-bottom: 35px;
+}
+.inbox-side-bar .input-group {
+    margin-bottom: 25px;
+}
+#compose-mail-mini {
+    margin-left: 4px;
+}
+.inbox-space {
+    display: block;
+    width: 185px;
+}
+.inbox-space > .progress {
+    margin-top: 5px;
+}
+.inbox-menu-lg {
+    list-style: none outside none;
+    margin: 0 0 20px;
+    padding: 0;
+}
+.inbox-menu-lg li a {
+    color: #333333;
+    display: block;
+    font-size: 13px;
+    padding: 6px 15px 7px;
+}
+.inbox-menu-lg li {
+    display: block;
+    width: 100%;
+}
+.inbox-menu-lg li a:hover {
+    background: none repeat scroll 0 0 #F4F4F4;
+    text-decoration: none;
+}
+.inbox-menu-lg li.active a {
+    background: none repeat scroll 0 0 #F0F0F0;
+    border-bottom: 1px solid #E7E7E7;
+    color: #3276B1;
+    font-weight: 700;
+}
+.inbox-menu-sm {
+    list-style: none outside none;
+    margin: 0 0 20px;
+    padding: 0;
+}
+.inbox-menu-sm li a {
+    color: #333333;
+    display: block;
+    font-size: 13px;
+    padding: 8px 15px 10px;
+}
+.inbox-menu-sm li {
+    display: block;
+    width: 100%;
+}
+.inbox-menu-sm li a:hover {
+    background: none repeat scroll 0 0 #F4F4F4;
+    text-decoration: none;
+}
+.inbox-menu-sm li.active a {
+    background: none repeat scroll 0 0 #F0F0F0;
+    border-bottom: 1px solid #E7E7E7;
+    color: #3276B1;
+    font-weight: 700;
+}
+.email-open-header {
+    border-bottom: 1px solid #BFBFBF;
+    border-top: 1px solid #EEEEEE;
+    font-size: 20px;
+    margin: -10px 0 0;
+    padding: 15px 3px;
+}
+.email-open-header > span {
+    background: none repeat scroll 0 0 #ACACAC;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 33px;
+    padding: 3px 5px;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+.inbox-info-bar {
+    border-bottom: 1px solid #BFBFBF;
+    padding: 10px 0;
+}
+.inbox-info-bar img {
+    border-left: 3px solid #FFFFFF;
+    display: inline-block;
+    height: auto;
+    margin-left: 2px;
+    margin-right: 7px;
+    vertical-align: middle;
+    width: 35px;
+}
+.inbox-download, .inbox-message {
+    border-bottom: 1px solid #BFBFBF;
+    padding: 15px 4px;
+}
+.inbox-download-list {
+    list-style: none outside none;
+    margin: 5px 0 0;
+    padding: 0;
+}
+.inbox-download-list li {
+    display: inline-block;
+    margin: 0 5px 0 0;
+    vertical-align: top;
+}
+.inbox-download-list li > *:first-child {
+    margin-bottom: 0;
+    overflow: hidden;
+    width: 150px;
+}
+.inbox-download-list li > *:first-child:hover {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #C0C0C0;
+}
+.inbox-compose-footer {
+    background: none repeat scroll 0 0 #F5F5F5;
+    border-bottom: 1px solid #A9A9A9;
+    padding: 10px;
+}
+.inbox-compose-footer, .inbox-download, .inbox-info-bar, .inbox-message {
+    margin-right: 240px;
+    position: relative;
+}
+.email-infobox {
+    border-bottom: 1px solid #BFBFBF;
+    display: block;
+    padding-bottom: 0;
+    padding-top: 15px;
+    position: absolute;
+    right: 15px;
+    top: 65px;
+    width: 180px;
+}
+.inbox-info-bar .form-group {
+    margin: 0;
+}
+.inbox-info-bar .form-group input, .inbox-info-bar .select2-container-multi .select2-choices {
+    border-color: #FFFFFF !important;
+}
+.inbox-info-bar .select2-choices > div {
+    display: none;
+}
+.inbox-info-bar .col-md-1, .inbox-info-bar .col-md-11 {
+    padding-left: 0;
+    padding-right: 0;
+}
+.fileinput {
+    padding-top: 3px;
+}
+.hidden {
+    display: none;
+}
+.inbox-info-bar em {
+    font-style: normal;
+    position: absolute;
+    right: 20px;
+    text-align: right;
+    top: 6px;
+}
+.email-reply-text > div {
+    border-left: 1px solid #D6D6D6;
+    color: #A9A9A9;
+    margin-left: 50px;
+    padding-left: 10px;
+}
+.email-reply-text > *:first-child {
+    padding-left: 45px;
+}
+.email-infobox {
+    border-bottom: 1px solid #BFBFBF;
+    display: block;
+    padding-bottom: 0;
+    padding-top: 15px;
+    position: absolute;
+    right: 15px;
+    top: 65px;
+    width: 180px;
+}
+.view_message {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #DBDEE0;
+    position: relative;
+}
+.view_message .t-r {
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    display: block;
+}
+.view_message .user_reply {
+    margin: -10px -10px 10px -10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #DBDEE0;
+    background: #F7F7F8;
+}
+.view_message p {
+    text-align: justify;
+}
+
+/* Chat Styles
+=================================================================== */
+.widget .widget-body {
+    background: #FFFFFF;
+    border: 1px solid #D2D2D2;
+    padding: 10px;
+}
+
+.chat-widget ul{
+	list-style-type: none;
+	margin: 0px;
+	padding:0px;
+}
+
+.chat-widget li{
+	margin-bottom: 15px;
+        list-style: none;
+}
+
+.chat-widget img{
+	border-radius:100px;
+	background:#fff;
+}
+
+.chat-widget .chat-meta{
+	font-size: 11px;
+	color: #aaa;
+}
+
+.chat-widget .by-me .chat-content{
+    background: #fcfcfc;
+	margin-left: 70px;
+	position: relative; 
+	border: 1px solid #ddd;
+	padding: 5px 10px;
+	border-radius: 5px;
+	line-height:20px;
+	color:#777;
+}
+
+.chat-widget .by-me .chat-content:after, .chat-widget .by-me .chat-content:before { 
+	right: 100%; 
+	border: solid transparent; 
+	content: " "; 
+	height: 0; 
+	width: 0; 
+	position: absolute; 
+	pointer-events: none; 
+} 
+
+.chat-widget .by-me .chat-content:after { 
+	border-color: rgba(255, 255, 255, 0); 
+	border-right-color: #fff; 
+	border-width: 6px; 
+	top: 30%; 
+	margin-top: -10px; 
+} 
+
+.chat-widget .by-me .chat-content:before { 
+	border-color: rgba(238, 238, 238, 0); 
+	border-right-color: #ccc; 
+	border-width: 7px; 
+	top: 30%; 
+	margin-top: -11px; 
+}
+
+.chat-widget .by-other .chat-content{
+	background: #fcfcfc;	
+	margin-right: 70px;
+	position: relative; 
+	border: 1px solid #ddd;
+	padding: 5px 10px;
+	border-radius: 5px;
+	line-height:20px;
+	color:#777;
+}
+
+.chat-widget .by-other  .chat-content:after, .chat-widget .by-other  .chat-content:before {
+	left: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.chat-widget .by-other  .chat-content:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-left-color: #fff;
+	border-width: 6px;
+	top: 30%;
+	margin-top: -6px;
+}
+
+.chat-widget .by-other  .chat-content:before {
+	border-color: rgba(204, 204, 204, 0);
+	border-left-color: #ccc;
+	border-width: 7px;
+	top: 30%;
+	margin-top: -7px;
+}
+
+.chat-widget .form-group{
+	width:80% !important;
+}

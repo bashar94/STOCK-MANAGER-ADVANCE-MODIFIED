@@ -1,0 +1,1 @@
+UPDATE `sma_settings` SET `version` = '3.0.2.22' WHERE `setting_id` = 1;

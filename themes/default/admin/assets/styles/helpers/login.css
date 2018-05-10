@@ -1,0 +1,129 @@
+html {
+    height: 100%;
+    overflow-y: visible; 
+}
+body {
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+body:before, body:after {
+    width: 100%;
+    position: static;
+    content: normal;
+}
+h3 {
+    margin: 0;
+}
+.page-back {
+    padding: 50px 0;
+    min-height: 100%;
+    overflow: hidden;
+    background-size: cover;
+    position: relative;
+    box-shadow: inset 0 3px 3px -3px rgba(0, 0, 0, 0.3);
+}
+.login-page .login-form-div {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+}
+.login-page .login-content,
+.login-page .reg-content {
+    background-color: white;
+    padding-bottom: 20px;
+}
+.login-page .div-title {
+    margin: 20px 0;
+}
+
+.login-page .input-group .input-group-addon {
+    border-radius: 0;
+}
+.login-page .custom-checkbox {
+    float: left;
+}
+.login-page .checkbox {
+    display: inline-block;
+    margin-bottom: 0;
+    margin-top: 6px;
+    padding-left: 1px;
+}
+.login-page .checkbox-text {
+    line-height: 22px;
+}
+.login-page .checkbox label {
+    cursor: pointer;
+    font-weight: 400;
+    margin-bottom: 0;
+    padding-left: 0px;
+    margin-top: 0;
+}
+.login-page .input-group .input-group-addon i, .login-page input[type="checkbox"] {
+    width: 30px;
+}
+.login-page .input-group .input-group-addon i {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.login-page .registration-form-action {
+    background-color: white;
+    padding: 20px;
+}
+.login-page .registration-form-div {
+    max-width: 620px;
+    margin: 0 auto;
+    width: 100%;
+    background: #FFF;
+}
+
+.login-page .registration-left-div {
+    padding-left: 0;
+    padding-right: 0px;
+}
+.login-page .registration-right-div {
+    padding-left: 0;
+    padding-right: 0;
+}
+.login-page .reg-content {
+    padding-bottom: 20px;
+}
+.login-page .btn, .login-page .form-control {
+    border-radius: 0 !important;
+}
+.login-page .login-form-links {
+    padding: 20px;
+    margin-top: 5px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+    background-color: white;
+}
+.div-captcha-left {
+    padding-right: 0;
+}
+.div-captcha-right {
+    padding-left: 0;
+}
+@media (max-width: 767px) {
+    .login-page .registration-left-div {
+        padding-right: 0px;
+    }
+    .login-page .registration-right-div {
+        padding-left: 0px;
+    }
+    .div-captcha-left {
+        width: 50%;
+        float: left;
+    }
+    .div-captcha-left img {
+        width: 100%;
+        height: 34px;
+    }
+    .div-captcha-right {
+        width: 50%;
+        float: left;
+    }
+}

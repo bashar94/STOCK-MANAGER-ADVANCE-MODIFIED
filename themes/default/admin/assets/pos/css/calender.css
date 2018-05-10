@@ -1,0 +1,20 @@
+/* --- 4.x DASHBOARD ICONS MENU --- */
+.table { border-collapse:collapse; width: 100%; }
+.table td { border: 1px solid #CCC; padding:5px; height:50px; vertical-align:top; }
+.table th { font-weight:bold; padding:5px; border: 1px solid #CCC; }
+
+.ytable { border-collapse:collapse; width: 100%; font-weight:bold; }
+.ytable td { border: 1px solid #CCC; padding:5px; height:50px; text-align:center; width:8%; }
+.ytable th { padding:5px; border: 1px solid #CCC; }
+.cl_wday {
+	text-align: center;
+	font-weight:bold;
+}
+div { padding: 5px; }
+.cl_equal { width: 14%; }
+
+.cl_left { text-align:left; } 
+
+.cl_right { text-align:right; font-weight:bold; color:#33F;}
+
+.highlight { color: #0088CC; font-weight:bold;}

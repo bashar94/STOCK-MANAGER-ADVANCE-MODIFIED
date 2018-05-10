@@ -1,0 +1,93 @@
+*, html {
+    padding: 0;
+    margin: 0;
+    font-family: DejaVu Sans !important;
+}
+body {
+    font-family: DejaVu Sans !important;
+    padding: 50px 15px;
+    margin: 0;
+    height: 100%;
+    background: #FFF !important;
+    line-height: 1.15 !important;
+}
+
+body:before, body:after {
+    display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: DejaVu Sans !important;
+    margin: 10px 0 !important;
+}
+h1 {
+    font-size: 32px;
+    line-height: 32px;
+    font-weight: bold;
+}
+h2 {
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: bold;
+}
+h3 {
+    font-size: 15px;
+    line-height: 15px;
+}
+h4 {
+    font-size: 14px;
+    line-height: 14px;
+}
+h5 {
+    font-size: 13px;
+    line-height: 13px;
+}
+h6 {
+    font-size: 12px;
+    line-height: 12px;
+}
+
+header, footer {
+    text-align: center;
+    padding: 5px 25px !important;
+    background-color: #F9F9FF;
+    height: 20px;
+    color: #000;
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin: 0;
+}
+header { top: 10px; }
+footer { bottom: 10px; }
+
+.title {
+    text-transform: uppercase !important;
+}
+
+.table th {
+    background-color: #eee !important;
+    text-align: center;
+    padding: 5px;
+    color: #000 !important;
+    border-color: #ddd !important;
+}
+
+.table td {
+    padding: 4px;
+}
+
+.barcode .bcimg {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+.qrimg {
+    display: none;
+}
+
+.page {
+    page-break-after: always;
+}
+
+@page { margin: 100px 25px; }
+.pagenum:before { content: counter(page); }

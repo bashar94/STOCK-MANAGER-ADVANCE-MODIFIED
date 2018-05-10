@@ -1,0 +1,83 @@
+@font-face {
+	font-family: 'Lato';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Lato Regular'), local('Lato-Regular'), url(../fonts/9k-RPmcnxYEPm8CNFsH2gg.woff) format('woff');
+}
+@font-face {
+	font-family: 'Ubuntu';
+	font-style: normal;
+	font-weight: 700;
+	src: local('Ubuntu Bold'), local('Ubuntu-Bold'), url(../fonts/trnbTfqisuuhRVI3i45C5w.woff) format('woff');
+}
+body {
+	font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	background:url('../images/bg2.png');
+	margin: 0; 
+	padding: 0;
+}
+h3 {
+	font-family: 'Ubuntu', sans-serif;
+	font-size:2em;
+	text-align:center;
+	padding:20px;
+	font-weight: bold;
+}
+h1 {
+	font-size:3em;
+	color:#1CD3CB;
+	text-transform:uppercase;
+	font-weight: normal;
+}
+p {
+	font-size:1em;
+	padding:1em 0;
+	line-height:1.5em;
+	font-weight: normal;
+}
+.wrap {
+	width: 90%;
+	max-width: 1000px;
+	margin: 0 auto;  
+}
+.main {
+	text-align:center;
+	background: rgba(255, 255, 255, 0.04);
+	color:#FFF;
+	margin-top:100px;
+	border:1px solid rgba(102, 102, 102, 0.31);
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius:5px;
+	padding: 20px;
+}
+.btn {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 1.5em;
+  width: 100px;
+  background: #55a39f;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  margin: 1em;
+  display: inline-block;
+}
+
+.btn:hover {
+  background: #0eada5;
+  text-decoration: none;
+}
+.clear {
+	clear: both;
+}
+.footer {
+	text-align:right;
+	padding-top:10px;
+}
+.footer p {
+	font-size:12px;
+	color:#DDD;
+}

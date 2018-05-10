@@ -1,0 +1,10 @@
+* { margin:0; padding:0; }
+#wrapper { padding:0; margin:10px 0 0 0; border:0; }
+.page-break  { display: block; page-break-before: always; }
+#tasks { display: none !important; }
+#table { border-collapse:collapse; border: 1px solid #d6dde2; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;}
+
+#table th, .header { border: 1px solid #d6dde2; background: #d6dde2; box-shadow: none !important; }
+#table td {border: 1px solid #d6dde2; }
+
+.total-heading { box-shadow: none !important; }
