@@ -1,4 +1,4 @@
-** It is a paid app so you will have to buy it **
+**It is a paid app so you will have to buy it**
 
 # STOCK-MANAGER-ADVANCE-MODIFIED
  It is a product of Tecdiary IT Solutions, Stock Manager Advance modified by me
