@@ -182,6 +182,7 @@
                                         <thead>
                                         <tr>
                                             <th><?= lang("product_name") . " (" . lang("product_code") . ")"; ?></th>
+                                            <!-- <th class="col-md-1">Expire Date</th> -->
                                             <th class="col-md-2"><?= lang("variant"); ?></th>
                                             <th class="col-md-1"><?= lang("type"); ?></th>
                                             <th class="col-md-1"><?= lang("quantity"); ?></th>

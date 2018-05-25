@@ -259,6 +259,7 @@
                                 <th>Receive Date</th>
                                 <th>Opening Stock</th>
                                 <th>Receiving Quantity</th>
+                                <th>Closing Stock</th>
                                 <th class="col-md-1 col-sm-1 col-xs-1 text-center">
                                     <i class="fa fa-trash-o" style="opacity:0.5; filter:alpha(opacity=50);"></i>
                                 </th>
@@ -270,7 +271,7 @@
                             $buttonPrint = false;
                             foreach ($existings as $existing) {
                                 
-                                    echo '<tr class="amar" id="'.$existing->id.'"><td>' . $this->sma->hrsd($existing->manufacturing) . '</td><td>' . $this->sma->hrsd($existing->expire) . '</td><td>' . $this->sma->hrsd($existing->receive_date) . '</td><td>' . $existing->opening_stock . '</td><td>' . $existing->receiving_quantity . '</td>';
+                                    echo '<tr class="amar" id="'.$existing->id.'"><td>' . $this->sma->hrsd($existing->manufacturing) . '</td><td>' . $this->sma->hrsd($existing->expire) . '</td><td>' . $this->sma->hrsd($existing->receive_date) . '</td><td>' . $existing->opening_stock . '</td><td>' . $existing->receiving_quantity . '</td><td>' . $existing->closing_stock . '</td>';
                                     
                                     if($buttonPrint){
                                         echo '<td><button type="button" class="btn mucha btn-default btn-xs btn-primary">Remove</span></button></td>';

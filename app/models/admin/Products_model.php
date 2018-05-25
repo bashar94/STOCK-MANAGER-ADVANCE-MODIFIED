@@ -1114,33 +1114,88 @@ class Products_model extends CI_Model
     }
     public function getExistingProductByCode($code)
     {
-        $check = false;
+        // $check = false;
 
-        $q = $this->getProductByCode($code);
-        if(sizeof($q) > 0){
+        // $q = $this->getProductByCode($code);
+        // if(sizeof($q) > 0){
          
-            $data[] = $q;
-            $check = true;
-        }
+        //     $data[] = $q;
+        //     $check = true;
+        // }
 
-        $q = $this->db->get_where('existing_products', array('product_code' => $code));
-        if ($q->num_rows() > 0) {
-            foreach (($q->result()) as $row) {
-                $data[] = $row;
+        // $q = $this->db->get_where('existing_products', array('product_code' => $code));
+        // if ($q->num_rows() > 0) {
+        //     foreach (($q->result()) as $row) {
+        //         $data[] = $row;
                 
-            }
-            $check = true;
-        }
+        //     }
+        //     $check = true;
+        // }
 
-        if($check){
-            return $data;
-        }
-        return FALSE;
+        // if($check){
+        //     return $data;
+        // }
+        // return FALSE;
+
+        //  $sp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(sma_sale_items.quantity),0) soldQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='completed' GROUP BY product_code) sold";
+
+            
+        // $pp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(ABS(sma_sale_items.quantity)),0) retQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='returned' GROUP BY product_code) ret";
+
+
+        //  $tp = "(SELECT code, manufacturing, a, expire, receive_date, SUM(receiving_quantity) AS receiving_quantity, SUM(opening_stock) AS opening_stock FROM (SELECT code, manufacturing, ABS(DATEDIFF(expire, CURDATE())) as a, expire, receive_date, receiving_quantity, opening_stock FROM ((SELECT code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_products) UNION ALL (SELECT product_code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_existing_products)) b ORDER BY CASE WHEN expire >= CURDATE() THEN 0 ELSE 1 END, a LIMIT 1000) as c GROUP BY code) p";
+
+        
+        // $dp = "(SELECT sum(quantity) AS quantity, product_id from sma_adjustment_items WHERE type = 'subtraction' GROUP BY product_id) damage";
+
+        
+        // $this->db->select("p.id as id , p.manufacturing as manufacturing, p.expire as expire, p.receive_date as receive_date, p.opening_stock as opening_stock, p.receiving_quantity as receiving_quantity, (COALESCE(p.opening_stock,0)+COALESCE(p.receiving_quantity,0)+COALESCE(ret.retQty,0)-COALESCE(sold.soldQty,0)-COALESCE(damage.quantity,0)) as closing_stock")
+        //     ->from('sma_products')
+        //     ->join($tp, 'sma_products.code = p.code', 'left')
+        //     ->join($sp, 'sma_products.id = sold.product_id', 'left')
+        //     ->join($pp, 'sma_products.id = ret.product_id', 'left')
+        //     ->join($dp, 'sma_products.id = damage.product_id', 'left')
+        //     ->where('sma_products.code', $code);
+       
+        // $q = $this->db->get();
+
+        // if ($q->num_rows() > 0) {
+        //     foreach (($q->result()) as $row) {
+        //         $data[] = $row;
+        //     }
+        //     return $data;
+        // }
+        // return FALSE;
+
+
+
+
+
     }
 
     public function addExistingProduct($data)
     {
         if ($this->db->insert('existing_products', $data)) {
+
+            $product_id = $this->getProductByCode($data['product_code'])->id;
+
+            $q = $this->db->get_where('warehouses_products', array('product_id' => $product_id, 'warehouse_id' => 1), 1);
+            if ($q->num_rows() > 0) {
+                $q = $q->row();
+                $arr['quantity'] = $data['receiving_quantity']+$q->quantity;
+            }
+
+            
+
+            $this->db->update('warehouses_products', $arr, array('product_id' => $product_id, 'warehouse_id' => 1));
+
+            $this->db->update('products', $arr, array('code' => $data['product_code']));
+            $arr['quantity_balance'] = $data['receiving_quantity']+$q->quantity;
+            $this->db->update('purchase_items', $arr, array('product_code' => $data['product_code']));
+
+            
+
+
             return TRUE;
         }
         return FALSE;
@@ -1148,6 +1203,27 @@ class Products_model extends CI_Model
 
     public function deleteExistingProduct($id)
     {
+
+        $e = $this->db->get_where('existing_products', array('id' => $id), 1);
+        if ($e->num_rows() > 0) {
+            $e = $e->row();
+
+            $product_id = $this->getProductByCode($e->product_code)->id;
+            $q = $this->db->get_where('warehouses_products', array('product_id' => $product_id, 'warehouse_id' => 1), 1);
+            if ($q->num_rows() > 0) {
+                $q = $q->row();
+                $arr['quantity'] = ($q->quantity) - ($e->receiving_quantity);
+            }
+
+            $this->db->update('warehouses_products', $arr, array('product_id' => $product_id, 'warehouse_id' => 1));
+
+            $this->db->update('products', $arr, array('code' =>  $e->product_code));
+            $arr['quantity_balance'] = $arr['quantity'];
+            $this->db->update('purchase_items', $arr, array('product_code' =>  $e->product_code));
+        }
+
+
+
         if ($this->db->delete('existing_products', array('id' => $id))) {
             return TRUE;
         }
