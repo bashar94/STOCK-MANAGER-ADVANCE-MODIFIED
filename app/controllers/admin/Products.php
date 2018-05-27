@@ -2481,6 +2481,7 @@ class Products extends MY_Controller
         $this->data['options'] = $this->products_model->getProductOptionsWithWH($id);
         $this->data['variants'] = $this->products_model->getProductOptions($id);
         $this->data['existings'] = $this->products_model->getExistingProductByCode($pr_details->code);
+        $this->data['DRS'] = $this->products_model->getDamRetSoldByCode($pr_details->code);
 
         $this->load->view($this->theme.'products/modal_view_stock', $this->data);
     }

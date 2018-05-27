@@ -259,7 +259,7 @@
                                 <th>Receive Date</th>
                                 <th>Opening Stock</th>
                                 <th>Receiving Quantity</th>
-                                <th>Closing Stock</th>
+                                
                                 <th class="col-md-1 col-sm-1 col-xs-1 text-center">
                                     <i class="fa fa-trash-o" style="opacity:0.5; filter:alpha(opacity=50);"></i>
                                 </th>
@@ -269,21 +269,46 @@
                         <tbody>
                             <?php
                             $buttonPrint = false;
+                            $total = 0;
                             foreach ($existings as $existing) {
                                 
-                                    echo '<tr class="amar" id="'.$existing->id.'"><td>' . $this->sma->hrsd($existing->manufacturing) . '</td><td>' . $this->sma->hrsd($existing->expire) . '</td><td>' . $this->sma->hrsd($existing->receive_date) . '</td><td>' . $existing->opening_stock . '</td><td>' . $existing->receiving_quantity . '</td><td>' . $existing->closing_stock . '</td>';
+                                    echo '<tr class="amar" id="'.$existing->id.'"><td>' . $this->sma->hrsd($existing->manufacturing) . '</td><td>' . $this->sma->hrsd($existing->expire) . '</td><td>' . $this->sma->hrsd($existing->receive_date) . '</td><td>' . $existing->opening_stock . '</td><td>' . $existing->receiving_quantity . '</td>';
                                     
                                     if($buttonPrint){
                                         echo '<td><button type="button" class="btn mucha btn-default btn-xs btn-primary">Remove</span></button></td>';
                                     }else{
+                                        $total += $existing->opening_stock;
                                         echo '<td></td>';
                                     }
+                                    $total += $existing->receiving_quantity;
+
                                     $buttonPrint = true;
                                     echo '</tr>';
                             
 
                             }
                             ?>
+                            <tr>
+                                <td></td><td></td><td></td>
+                                <td><strong>Total</strong></td>
+                                <td>
+                                <?php 
+                                echo $total;
+                                if(intval($DRS[0]) > 0){
+                                    echo '+'.intval($DRS[0]).'(R)';    
+                                }
+                                if(intval($DRS[1]) > 0){
+                                    echo '-'.intval($DRS[1]).'(S)';    
+                                }
+
+                                if(intval($DRS[2]) > 0){
+                                    echo '-'.intval($DRS[2]).'(D)';    
+                                }
+
+                                echo '='.($total+intval($DRS[0])-intval($DRS[1])-intval($DRS[2]));
+                                ?>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
