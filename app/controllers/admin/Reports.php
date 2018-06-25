@@ -3748,22 +3748,43 @@ class Reports extends MY_Controller
         
         if ($pdf || $xls) {
 
-           $sp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(sma_sale_items.quantity),0) soldQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='completed' GROUP BY product_code) sold";
+           // $sp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(sma_sale_items.quantity),0) soldQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='completed' GROUP BY product_code) sold";
 
             
-            $pp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(ABS(sma_sale_items.quantity)),0) retQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='returned' GROUP BY product_code) ret";
+           //  $pp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(ABS(sma_sale_items.quantity)),0) retQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='returned' GROUP BY product_code) ret";
 
-            $tp = "(SELECT code, manufacturing, a, expire, receive_date, SUM(receiving_quantity) AS receiving_quantity, SUM(opening_stock) AS opening_stock FROM (SELECT code, manufacturing, ABS(DATEDIFF(expire, CURDATE())) as a, expire, receive_date, receiving_quantity, opening_stock FROM ((SELECT code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_products) UNION ALL (SELECT product_code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_existing_products)) b ORDER BY CASE WHEN expire >= CURDATE() THEN 0 ELSE 1 END, a LIMIT 1000) as c GROUP BY code) p";
+           //  $tp = "(SELECT code, manufacturing, a, expire, receive_date, SUM(receiving_quantity) AS receiving_quantity, SUM(opening_stock) AS opening_stock FROM (SELECT code, manufacturing, ABS(DATEDIFF(expire, CURDATE())) as a, expire, receive_date, receiving_quantity, opening_stock FROM ((SELECT code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_products) UNION ALL (SELECT product_code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_existing_products)) b ORDER BY CASE WHEN expire >= CURDATE() THEN 0 ELSE 1 END, a LIMIT 1000) as c GROUP BY code) p";
 
-            $dp = "(SELECT sum(quantity) AS quantity, product_id from sma_adjustment_items WHERE type = 'subtraction' GROUP BY product_id) damage";
+           //  $dp = "(SELECT sum(quantity) AS quantity, product_id from sma_adjustment_items WHERE type = 'subtraction' GROUP BY product_id) damage";
+
+            $sp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(sma_sale_items.quantity),0) soldQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='completed' AND sma_sales.date = CURDATE() GROUP BY product_code) sold";
+
+           $pp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(ABS(sma_sale_items.quantity)),0) retQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='returned' AND sma_sales.date = CURDATE() GROUP BY product_code) ret";
+
+           $tp = "(SELECT code, manufacturing, a, expire, receive_date, SUM(receiving_quantity) AS receiving_quantity, SUM(opening_stock) AS opening_stock FROM (SELECT code, manufacturing, ABS(DATEDIFF(expire, CURDATE())) as a, expire, receive_date, receiving_quantity, opening_stock FROM ((SELECT code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_products) UNION ALL (SELECT product_code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_existing_products)) b ORDER BY CASE WHEN expire >= CURDATE() THEN 0 ELSE 1 END, a LIMIT 1000) as c WHERE receive_date = CURDATE() GROUP BY code) p";
+
+            $dp = "(SELECT sum(sma_adjustment_items.quantity) AS quantity, sma_adjustment_items.product_id FROM sma_adjustment_items LEFT JOIN sma_adjustments ON sma_adjustments.id = sma_adjustment_items.product_id WHERE sma_adjustment_items.type = 'subtraction' AND sma_adjustments.date = CURDATE() GROUP BY product_id) damage";
+
+
+           $op_sp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(sma_sale_items.quantity),0) soldQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='completed' AND sma_sales.date < CURDATE() GROUP BY product_code) osold";
+
+           $op_pp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(ABS(sma_sale_items.quantity)),0) retQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='returned' AND sma_sales.date < CURDATE() GROUP BY product_code) oret";
+
+           $op_tp = "(SELECT code, manufacturing, a, expire, receive_date, SUM(receiving_quantity) AS receiving_quantity, SUM(opening_stock) AS opening_stock FROM (SELECT code, manufacturing, ABS(DATEDIFF(expire, CURDATE())) as a, expire, receive_date, receiving_quantity, opening_stock FROM ((SELECT code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_products) UNION ALL (SELECT product_code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_existing_products)) b ORDER BY CASE WHEN expire >= CURDATE() THEN 0 ELSE 1 END, a LIMIT 1000) as c WHERE receive_date < CURDATE() GROUP BY code) op";
+
+            $op_dp = "(SELECT sum(sma_adjustment_items.quantity) AS quantity, sma_adjustment_items.product_id FROM sma_adjustment_items LEFT JOIN sma_adjustments ON sma_adjustments.id = sma_adjustment_items.product_id WHERE sma_adjustment_items.type = 'subtraction' AND sma_adjustments.date < CURDATE() GROUP BY product_id) odamage";
 
              $this->db
-                ->select("sma_products.code, sma_products.name, sma_brands.name as brand, sma_products.origin, sma_products.product_details, sma_units.name as unit, sma_products.opening_stock as opening_stock, p.receiving_quantity as receiving_quantity, sold.soldQty, ret.retQty, damage.quantity as damage_unit, IF(COALESCE(sum(sma_products.closing_stock),0) = '0', COALESCE(sma_products.opening_stock,0)+COALESCE(p.receiving_quantity,0)+COALESCE(ret.retQty,0)-COALESCE(sold.soldQty,0)-COALESCE(damage.quantity,0), sum(sma_products.closing_stock)) as closing_stock, sma_products.id", FALSE)
+                ->select("sma_products.code, sma_products.name, sma_brands.name as brand, sma_products.origin, sma_products.product_details, sma_units.name as unit, (COALESCE(sma_products.opening_stock,0)+COALESCE(op.receiving_quantity,0)+COALESCE(oret.retQty,0)-COALESCE(osold.soldQty,0)-COALESCE(odamage.quantity,0)) as opening_stock, p.receiving_quantity as receiving_quantity, sold.soldQty, ret.retQty, damage.quantity as damage_unit, IF(COALESCE(sum(sma_products.closing_stock),0) = '0', (COALESCE(sma_products.opening_stock,0)+COALESCE(op.receiving_quantity,0)+COALESCE(oret.retQty,0)-COALESCE(osold.soldQty,0)-COALESCE(odamage.quantity,0))+COALESCE(p.receiving_quantity,0)+COALESCE(ret.retQty,0)-COALESCE(sold.soldQty,0)-COALESCE(damage.quantity,0), sum(sma_products.closing_stock)) as closing_stock, sma_products.id", FALSE)
                 ->from('sma_products')
                 ->join($tp, 'sma_products.code = p.code', 'left')
                 ->join($sp, 'sma_products.id = sold.product_id', 'left')
                 ->join($pp, 'sma_products.id = ret.product_id', 'left')
                 ->join($dp, 'sma_products.id = damage.product_id', 'left')
+                ->join($op_tp, 'sma_products.code = op.code', 'left')
+                ->join($op_sp, 'sma_products.id = osold.product_id', 'left')
+                ->join($op_pp, 'sma_products.id = oret.product_id', 'left')
+                ->join($op_dp, 'sma_products.id = odamage.product_id', 'left')
                 ->join('sma_brands', 'sma_products.brand = sma_brands.id', 'left')
                 ->join('sma_units', 'sma_products.unit = sma_units.id', 'left')
                 ->group_by('sma_products.code');
@@ -3967,22 +3988,35 @@ class Reports extends MY_Controller
             $this->load->library('datatables');
 
 
-            $sp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(sma_sale_items.quantity),0) soldQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='completed' GROUP BY product_code) sold";
+            $sp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(sma_sale_items.quantity),0) soldQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='completed' AND sma_sales.date = CURDATE() GROUP BY product_code) sold";
 
-            
-            $pp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(ABS(sma_sale_items.quantity)),0) retQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='returned' GROUP BY product_code) ret";
+           $pp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(ABS(sma_sale_items.quantity)),0) retQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='returned' AND sma_sales.date = CURDATE() GROUP BY product_code) ret";
 
-            $tp = "(SELECT code, manufacturing, a, expire, receive_date, SUM(receiving_quantity) AS receiving_quantity, SUM(opening_stock) AS opening_stock FROM (SELECT code, manufacturing, ABS(DATEDIFF(expire, CURDATE())) as a, expire, receive_date, receiving_quantity, opening_stock FROM ((SELECT code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_products) UNION ALL (SELECT product_code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_existing_products)) b ORDER BY CASE WHEN expire >= CURDATE() THEN 0 ELSE 1 END, a LIMIT 1000) as c GROUP BY code) p";
+           $tp = "(SELECT code, manufacturing, a, expire, receive_date, SUM(receiving_quantity) AS receiving_quantity, SUM(opening_stock) AS opening_stock FROM (SELECT code, manufacturing, ABS(DATEDIFF(expire, CURDATE())) as a, expire, receive_date, receiving_quantity, opening_stock FROM ((SELECT code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_products) UNION ALL (SELECT product_code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_existing_products)) b ORDER BY CASE WHEN expire >= CURDATE() THEN 0 ELSE 1 END, a LIMIT 1000) as c WHERE receive_date = CURDATE() GROUP BY code) p";
 
-            $dp = "(SELECT sum(quantity) AS quantity, product_id from sma_adjustment_items WHERE type = 'subtraction' GROUP BY product_id) damage";
+            $dp = "(SELECT sum(sma_adjustment_items.quantity) AS quantity, sma_adjustment_items.product_id FROM sma_adjustment_items LEFT JOIN sma_adjustments ON sma_adjustments.id = sma_adjustment_items.product_id WHERE sma_adjustment_items.type = 'subtraction' AND sma_adjustments.date = CURDATE() GROUP BY product_id) damage";
+
+
+           $op_sp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(sma_sale_items.quantity),0) soldQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='completed' AND sma_sales.date < CURDATE() GROUP BY product_code) osold";
+
+           $op_pp = "(SELECT sma_sale_items.product_id as product_id, COALESCE(SUM(ABS(sma_sale_items.quantity)),0) retQty FROM sma_sale_items LEFT JOIN sma_sales ON sma_sales.id = sma_sale_items.sale_id WHERE sma_sales.sale_status ='returned' AND sma_sales.date < CURDATE() GROUP BY product_code) oret";
+
+           $op_tp = "(SELECT code, manufacturing, a, expire, receive_date, SUM(receiving_quantity) AS receiving_quantity, SUM(opening_stock) AS opening_stock FROM (SELECT code, manufacturing, ABS(DATEDIFF(expire, CURDATE())) as a, expire, receive_date, receiving_quantity, opening_stock FROM ((SELECT code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_products) UNION ALL (SELECT product_code, manufacturing, expire, receive_date, receiving_quantity, opening_stock FROM sma_existing_products)) b ORDER BY CASE WHEN expire >= CURDATE() THEN 0 ELSE 1 END, a LIMIT 1000) as c WHERE receive_date < CURDATE() GROUP BY code) op";
+
+            $op_dp = "(SELECT sum(sma_adjustment_items.quantity) AS quantity, sma_adjustment_items.product_id FROM sma_adjustment_items LEFT JOIN sma_adjustments ON sma_adjustments.id = sma_adjustment_items.product_id WHERE sma_adjustment_items.type = 'subtraction' AND sma_adjustments.date < CURDATE() GROUP BY product_id) odamage";
+
 
             $this->datatables
-                ->select("sma_products.code, sma_products.name, sma_brands.name as brand, sma_products.origin, sma_products.product_details, sma_units.name as unit, sma_products.opening_stock as opening_stock, p.receiving_quantity as receiving_quantity, sold.soldQty, ret.retQty, damage.quantity as damage_unit, IF(COALESCE(sum(sma_products.closing_stock),0) = '0', COALESCE(sma_products.opening_stock,0)+COALESCE(p.receiving_quantity,0)+COALESCE(ret.retQty,0)-COALESCE(sold.soldQty,0)-COALESCE(damage.quantity,0), sum(sma_products.closing_stock)) as closing_stock, sma_products.id", FALSE)
+                ->select("sma_products.code, sma_products.name, sma_brands.name as brand, sma_products.origin, sma_products.product_details, sma_units.name as unit, (COALESCE(sma_products.opening_stock,0)+COALESCE(op.receiving_quantity,0)+COALESCE(oret.retQty,0)-COALESCE(osold.soldQty,0)-COALESCE(odamage.quantity,0)) as opening_stock, p.receiving_quantity as receiving_quantity, sold.soldQty, ret.retQty, damage.quantity as damage_unit, IF(COALESCE(sum(sma_products.closing_stock),0) = '0', (COALESCE(sma_products.opening_stock,0)+COALESCE(op.receiving_quantity,0)+COALESCE(oret.retQty,0)-COALESCE(osold.soldQty,0)-COALESCE(odamage.quantity,0))+COALESCE(p.receiving_quantity,0)+COALESCE(ret.retQty,0)-COALESCE(sold.soldQty,0)-COALESCE(damage.quantity,0), sum(sma_products.closing_stock)) as closing_stock, sma_products.id", FALSE)
                 ->from('sma_products')
                 ->join($tp, 'sma_products.code = p.code', 'left')
                 ->join($sp, 'sma_products.id = sold.product_id', 'left')
                 ->join($pp, 'sma_products.id = ret.product_id', 'left')
                 ->join($dp, 'sma_products.id = damage.product_id', 'left')
+                ->join($op_tp, 'sma_products.code = op.code', 'left')
+                ->join($op_sp, 'sma_products.id = osold.product_id', 'left')
+                ->join($op_pp, 'sma_products.id = oret.product_id', 'left')
+                ->join($op_dp, 'sma_products.id = odamage.product_id', 'left')
                 ->join('sma_brands', 'sma_products.brand = sma_brands.id', 'left')
                 ->join('sma_units', 'sma_products.unit = sma_units.id', 'left')
                 ->group_by('sma_products.code');

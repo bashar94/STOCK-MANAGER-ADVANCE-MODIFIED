@@ -54,18 +54,18 @@ if ($this->input->post('origin')) {
                 for (var i = 0; i < aaData.length; i++) {
                     
                    
+                    if(aaData[aiDisplay[i]][6] !=null)
+                        os += parseFloat(aaData[aiDisplay[i]][6]);
+                    if(aaData[aiDisplay[i]][7] !=null)
+                        rq += parseFloat(aaData[aiDisplay[i]][7]);
+                    if(aaData[aiDisplay[i]][8] !=null)
+                        s += parseFloat(aaData[aiDisplay[i]][8]);
                     if(aaData[aiDisplay[i]][9] !=null)
-                        os += parseFloat(aaData[aiDisplay[i]][9]);
+                        r += parseFloat(aaData[aiDisplay[i]][9]);
                     if(aaData[aiDisplay[i]][10] !=null)
-                        rq += parseFloat(aaData[aiDisplay[i]][10]);
+                        d += parseFloat(aaData[aiDisplay[i]][10]);
                     if(aaData[aiDisplay[i]][11] !=null)
-                        s += parseFloat(aaData[aiDisplay[i]][11]);
-                    if(aaData[aiDisplay[i]][12] !=null)
-                        r += parseFloat(aaData[aiDisplay[i]][12]);
-                    if(aaData[aiDisplay[i]][13] !=null)
-                        d += parseFloat(aaData[aiDisplay[i]][13]);
-                    if(aaData[aiDisplay[i]][14] !=null)
-                        c += parseFloat(aaData[aiDisplay[i]][14]);
+                        c += parseFloat(aaData[aiDisplay[i]][11]);
                 }
                 var nCells = nRow.getElementsByTagName('th');
                 nCells[6].innerHTML = decimalFormat(parseFloat(os));
